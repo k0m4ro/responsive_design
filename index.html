@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bruny Island</title>
+    <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Darker Grotesque', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            color: #000000;
+            font-size: 24px;
+        }
+
+        header {
+            background-color: #ffffff;
+            color: #000000;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #000000;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+
+        .logo {
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .search-bar {
+            display: none;
+            width: calc(100% - 40px);
+            max-width: 400px;
+            padding: 8px 16px;
+            border: 1px solid #ccc;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            background-color: #ffffff;
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+
+        .search-bar input {
+            border: none;
+            outline: none;
+            flex-grow: 1;
+            margin-left: 8px;
+            font-size: 16px;
+            background-color: transparent;
+        }
+
+        .search-bar svg {
+            width: 24px;
+            height: 24px;
+            fill: #888;
+        }
+
+        .hamburger-menu {
+            display: none;
+            cursor: pointer;
+        }
+
+        .hamburger-menu svg {
+            width: 24px;
+            height: 24px;
+            fill: #888;
+        }
+
+        .heading {
+            height: 812px;
+            background: url('/BrunnyIsland/images/Bild_3.jpg') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            color: #ffffff;
+            padding: 0 20px;
+            box-sizing: border-box;
+            width: 100%;
+            margin-top: 0;
+            position: relative;
+        }
+
+        .heading-content {
+            text-align: left;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .heading h1 {
+            font-size: 64px;
+            margin: 0;
+        }
+
+        .heading .subtitle {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        section {
+            padding: 2em;
+            background-color: #ffffff;
+            margin: 2em auto;
+            width: 80%;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2em;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .about-left .about-placeholder {
+            border-radius: 50%;
+            width: 181px;
+            height: 181px;
+            background-color: #ccc;
+            margin-right: 20px;
+        }
+
+        .about-left img {
+            border-radius: 50%;
+            width: 181px;
+            height: 181px;
+        }
+
+        .about-left div {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .about-left h2 {
+            margin: 0;
+            font-size: 64px;
+        }
+
+        .about-left .subtitle {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .gallery-item, .geo-placeholder, .about-placeholder {
+            border-radius: 16px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #gallery {
+            position: relative;
+            padding-bottom: 50px;
+        }
+
+        #gallery .gallery {
+            column-count: 3;
+            column-gap: 1em;
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        #gallery .gallery-item {
+            break-inside: avoid;
+            margin-bottom: 1em;
+            background-color: #ccc;
+            width: 100%;
+        }
+
+        #gallery .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 16px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #gallery .gallery-item:hover img {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #gallery .gallery-item:nth-child(2) {
+            height: 300px;
+        }
+
+        #gallery .gallery-item:nth-child(3) {
+            height: 300px;
+        }
+
+        #gallery .gallery-item:nth-child(6) {
+            height: 300px;
+        }
+
+        #gallery .gallery-item:not(:nth-child(2)):not(:nth-child(3)):not(:nth-child(6)) {
+            height: 200px;
+        }
+
+        #gallery::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+            z-index: 2;
+        }
+
+        .more-button {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            border: 2px solid #000000;
+            background: none;
+            color: #000000;
+            text-transform: lowercase;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            z-index: 3;
+        }
+
+        .more-button svg {
+            margin-left: 8px;
+            width: 16px;
+            height: 16px;
+            fill: #000000;
+        }
+
+        .facts-section {
+            background-color: #2D4A5F;
+            color: #ffffff;
+            padding: 2em 0;
+            width: 100%;
+            margin: 0;
+        }
+
+        .facts-container {
+            width: 80%;
+            margin: 0 auto;
+            max-width: 1200px;
+        }
+
+        .facts-title {
+            text-align: left;
+            margin-bottom: 1em;
+        }
+
+        .facts {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1em;
+        }
+
+        .fact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5em;
+        }
+
+        .fact-item .icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+        }
+
+        .geo-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2em;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .geo-map {
+            width: 100%;
+            height: 450px;
+            border: none;
+            border-radius: 16px;
+        }
+
+        footer {
+            background-color: #AEDDD8;
+            padding: 2em 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .footer-content {
+            width: 80%;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 2em;
+            max-width: 1200px;
+        }
+
+        .footer-column h3 {
+            margin-top: 0;
+            color: #35625C;
+            text-transform: uppercase;
+        }
+
+        .footer-column ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #000000;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                display: none;
+            }
+
+            .search-bar {
+                display: flex;
+                position: absolute;
+                top: 10px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 2;
+                margin: 0;
+                padding: 8px 16px;
+                border-radius: 30px;
+                border: 1px solid #ccc;
+                background-color: #ffffff;
+                width: calc(100% - 40px);
+                max-width: none;
+            }
+
+            .search-bar input {
+                background-color: transparent;
+                color: #000000;
+            }
+
+            .search-bar input::placeholder {
+                color: #000000;
+            }
+
+            .hamburger-menu {
+                display: flex;
+            }
+
+            .about-content {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .about-left {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .about-left .about-placeholder {
+                margin-bottom: 20px;
+                margin-right: 0;
+            }
+
+            .about-left div {
+                align-items: center;
+                text-align: center;
+            }
+
+            .facts {
+                grid-template-columns: 1fr;
+            }
+
+            .geo-content {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            #gallery .gallery {
+                column-count: 2;
+                column-gap: 1em;
+            }
+
+            .heading-content {
+                padding-left: 0;
+                text-align: center;
+            }
+
+            .heading {
+                padding: 0;
+                justify-content: center;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .search-bar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <div class="logo">Logo</div>
+            <nav>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#facts">Facts</a></li>
+                    <li><a href="#geographics">Geographics</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="heading">
+        <div class="heading-content">
+            <h1>Bruny Island</h1>
+            <p class="subtitle">Tasmania, Australia</p>
+        </div>
+        <div class="search-bar">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M10 2a8 8 0 015.291 13.707l4.853 4.853-1.414 1.414-4.853-4.853A8 8 0 1110 2zm0 2a6 6 0 100 12 6 6 0 000-12z"/>
+            </svg>
+            <input type="text" placeholder="Search...">
+            <div class="hamburger-menu">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="about-content">
+            <div class="about-left">
+                <div class="about-placeholder">
+                    <img src="/BrunnyIsland/images/Bild_3.jpg" alt="About Image">
+                </div>
+                <div>
+                    <h2>Bruny Island</h2>
+                    <p class="subtitle">Tasmania, Australia</p>
+                </div>
+            </div>
+            <div class="about-right">
+                <h2>About</h2>
+                <p>Bruny Island ist eine 362 Quadratkilometer große Insel vor der südöstlichen Küste Tasmaniens, Australien. Die Insel ist durch den D'Entrecasteaux Channel vom tasmanischen Festland getrennt, und ihre Ostküste liegt innerhalb der Tasmansee.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery">
+        <div class="gallery">
+            <div class="gallery-item"><img src="/BrunnyIsland/images/Bild_1.avif" alt="Gallery Image 1"></div>
+            <div class="gallery-item"><img src="/BrunnyIsland/images/Bild_2.jpg" alt="Gallery Image 2"></div>
+            <div class="gallery-item"><img src="/BrunnyIsland/images/Bild_3.jpg" alt="Gallery Image 3"></div>
+            <div class="gallery-item"><img src="/BrunnyIsland/images/Bild_4.jpg" alt="Gallery Image 4"></div>
+            <div class="gallery-item"><img src="/BrunnyIsland/images/Bild_1.avif" alt="Gallery Image 5"></div>
+            <div class="gallery-item"><img src="/BrunnyIsland/images/Bild_2.jpg" alt="Gallery Image 6"></div>
+        </div>
+        <button class="more-button">mehr
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M10 17l5-5-5-5v10z"/>
+            </svg>
+        </button>
+    </section>
+
+    <section id="facts" class="facts-section">
+        <div class="facts-container">
+            <h2 class="facts-title">Fakten</h2>
+            <div class="facts">
+                <div class="fact-item">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5 14.5 7.62 14.5 9 13.38 11.5 12 11.5z"/>
+                    </svg>
+                    <p>Ort: Koordinaten</p>
+                </div>
+                <div class="fact-item">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5 14.5 7.62 14.5 9 13.38 11.5 12 11.5z"/>
+                    </svg>
+                    <p>Höchste Erhebung: X Meter</p>
+                </div>
+                <div class="fact-item">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5 14.5 7.62 14.5 9 13.38 11.5 12 11.5z"/>
+                    </svg>
+                    <p>Gesamtfläche der Insel: X km²</p>
+                </div>
+                <div class="fact-item">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5 14.5 7.62 14.5 9 13.38 11.5 12 11.5z"/>
+                    </svg>
+                    <p>Höchster Punkt: X</p>
+                </div>
+                <div class="fact-item">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5 14.5 7.62 14.5 9 13.38 11.5 12 11.5z"/>
+                    </svg>
+                    <p>Koordinaten</p>
+                </div>
+                <div class="fact-item">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5 14.5 7.62 14.5 9 13.38 11.5 12 11.5z"/>
+                    </svg>
+                    <p>Höchste Erhebung</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="geographics">
+        <div class="geo-content">
+            <div class="geo-left">
+                <h2>Geografie</h2>
+                <p>Geologisch besteht Bruny Island eigentlich aus zwei Landmassen – North Bruny und South Bruny – die durch eine lange, schmale, sandige Landenge verbunden sind, die oft als "The Neck" bezeichnet wird. Die Insel hat eine Gesamtlänge von etwa 50 Kilometern. Das Ferienort Dennes Point befindet sich in North Bruny, während sich in South Bruny die Städte Alonnah, Adventure Bay und Lunawanna befinden.</p>
+                <h3>Klima</h3>
+                <p>Cape Bruny hat ein ozeanisches Klima (Köppen: Cfb) mit milden, relativ trockenen Sommern und kühlen, feuchten Wintern.</p>
+            </div>
+            <div class="geo-right">
+                <iframe
+                    class="geo-map"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d20712.665144312465!2d147.1996442!3d-43.3537145!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xaa6c96e7f16a531d%3A0x503c86e6f3a6aa0!2sBruny%20Island%2C%20Tasmania!5e0!3m2!1sen!2sau!4v1594703864985!5m2!1sen!2sau"
+                    allowfullscreen=""
+                    aria-hidden="false"
+                    tabindex="0"
+                ></iframe>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Über</h3>
+                <p>Bruny Island ist eine 362 Quadratkilometer große Insel vor der südöstlichen Küste Tasmaniens, Australien. Die Insel ist durch den D'Entrecasteaux Channel vom tasmanischen Festland getrennt, und ihre Ostküste liegt innerhalb der Tasmansee.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Kategorien</h3>
+                <ul>
+                    <li><a href="#about">Über</a></li>
+                    <li><a href="#facts">Fakten</a></li>
+                    <li><a href="#geographics">Geografie</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Schnellzugriff</h3>
+                <ul>
+                    <li><a href="#about">Über</a></li>
+                    <li><a href="#facts">Fakten</a></li>
+                    <li><a href="#geographics">Geografie</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
